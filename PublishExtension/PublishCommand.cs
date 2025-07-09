@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel.Design;
 using System.Reflection;
 using System.Threading.Tasks;
+using PublishLib;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
@@ -18,6 +19,7 @@ internal static class PublishCommand
     private static OleMenuCommandService? _commandService;
     private static uint _eventsCookie;
     private static bool _solutionOpen;
+    private static readonly Publisher _publisher = new();
 
     public static async Task InitializeAsync(AsyncPackage package)
     {
@@ -79,7 +81,12 @@ internal static class PublishCommand
             binder: null,
             buildManager,
             new object?[] { null, null, 0, 0, 0 });
-        VsShellUtilities.ShowMessageBox(_package, "TODO: Publish Solution", "Publish", OLEMSGICON.OLEMSGICON_INFO, OLEMSGBUTTON.OLEMSGBUTTON_OK, OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
+
+        var solution = await _package.GetServiceAsync(typeof(SVsSolution)) as IVsSolution;
+        string solutionFile = string.Empty;
+        solution?.GetSolutionInfo(out _, out solutionFile, out _);
+        var message = await _publisher.PublishSolutionAsync(solutionFile);
+        VsShellUtilities.ShowMessageBox(_package, message, "Publish", OLEMSGICON.OLEMSGICON_INFO, OLEMSGBUTTON.OLEMSGBUTTON_OK, OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
     }
 
     private static async Task ExecutePublishSelectionAsync()
@@ -88,8 +95,9 @@ internal static class PublishCommand
         if (_package is null)
             return;
         var monitorSelection = await _package.GetServiceAsync(typeof(SVsShellMonitorSelection)) as IVsMonitorSelection;
-        // TODO: use monitorSelection to detect active project
-        VsShellUtilities.ShowMessageBox(_package, "Not implemented", "Publish", OLEMSGICON.OLEMSGICON_INFO, OLEMSGBUTTON.OLEMSGBUTTON_OK, OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
+        // TODO: use monitorSelection to detect active project path
+        var message = await _publisher.PublishProjectAsync("selected-project");
+        VsShellUtilities.ShowMessageBox(_package, message + " - Not implemented", "Publish", OLEMSGICON.OLEMSGICON_INFO, OLEMSGBUTTON.OLEMSGBUTTON_OK, OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
     }
 
     private sealed class SolutionEvents : IVsSolutionEvents

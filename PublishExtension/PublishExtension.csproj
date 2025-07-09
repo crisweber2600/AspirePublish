@@ -16,5 +16,6 @@
       <SubType>Designer</SubType>
     </Content>
     <None Include="source.extension.vsixmanifest" />
+    <ProjectReference Include="..\PublishLib\PublishLib.csproj" />
   </ItemGroup>
 </Project>
