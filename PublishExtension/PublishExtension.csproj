@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows7.0</TargetFramework>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <AssemblyName>PublishExtension</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.8.329" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Publish.vsct">
+      <Generator>VSCTCompile</Generator>
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="source.extension.vsixmanifest" />
+    <ProjectReference Include="..\PublishLib\PublishLib.csproj" />
+  </ItemGroup>
+</Project>
