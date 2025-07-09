@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" IncludeInVSCommandTable="true">
+  <Extern href="stdidcmd.h" />
+  <Extern href="vsshlids.h" />
+
+  <Commands package="guidPublishPackage">
+    <Groups>
+      <Group guid="guidPublishPackageCmdSet" id="PublishMenuGroup" priority="0x0600">
+        <Parent guid="guidPublishPackageCmdSet" id="PublishTopMenu" />
+      </Group>
+    </Groups>
+    <Menus>
+      <Menu guid="guidPublishPackageCmdSet" id="PublishTopMenu" type="Menu" priority="0x0600">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_BAR" />
+        <Strings>
+          <ButtonText>$(resx:PublishMenuText)</ButtonText>
+        </Strings>
+      </Menu>
+    </Menus>
+    <Buttons>
+      <Button guid="guidPublishPackageCmdSet" id="cmdidPublishSolution" priority="0x0100" type="Button">
+        <Parent guid="guidPublishPackageCmdSet" id="PublishMenuGroup" />
+        <Strings>
+          <ButtonText>$(resx:PublishSolutionText)</ButtonText>
+          <ToolTipText>$(resx:PublishSolutionTooltip)</ToolTipText>
+        </Strings>
+      </Button>
+      <Button guid="guidPublishPackageCmdSet" id="cmdidPublishSelection" priority="0x0101" type="Button">
+        <Parent guid="guidPublishPackageCmdSet" id="PublishMenuGroup" />
+        <Strings>
+          <ButtonText>$(resx:PublishSelectionText)</ButtonText>
+          <ToolTipText>$(resx:PublishSelectionTooltip)</ToolTipText>
+        </Strings>
+      </Button>
+    </Buttons>
+  </Commands>
+  <Symbols>
+    <GuidSymbol name="guidPublishPackage" value="{d9b3b76d-4d2d-4c8e-9e0b-05f4b3a6c0a1}" />
+    <GuidSymbol name="guidPublishPackageCmdSet" value="{4bcb48eb-606d-4f7d-a43f-9aba3a099035}">
+      <IDSymbol name="PublishTopMenu" value="0x1000" />
+      <IDSymbol name="PublishMenuGroup" value="0x1020" />
+      <IDSymbol name="cmdidPublishSolution" value="0x0100" />
+      <IDSymbol name="cmdidPublishSelection" value="0x0101" />
+    </GuidSymbol>
+  </Symbols>
+</CommandTable>
